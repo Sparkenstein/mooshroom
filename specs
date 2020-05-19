@@ -1,0 +1,51 @@
+double quotes represents string
+
+triple quotes represents mutline comments
+hash represents single line comment
+
+AST:
+num: { type:"num", value: NUMBER }
+str: { type:"str", value: STRING }
+bool: { type: "bool", value: true or false }
+var: { type: "var", value: NAME }
+assign: { type: "assign", operator: "is", left: AST, right: AST}
+binary: { type: "binary", operator: OPERATOR, left: AST, right: AST }
+call: { type: "call", func: AST, args: [AST]}
+prog: { type: "prog", prog: [AST] }
+
+
+EX:
+let a is 1
+let b is 2
+print(a, b, a plus b)
+
+generated AST:
+{
+    type: "prog",
+    prog: [
+        // first line
+        {
+            type: "assign",
+            operator: "is",
+            left: { type: "var", value: "a"},
+            right: { type: "num", value: 1}
+        },
+        // second line
+        {
+            type: "assign",
+            operator: "is",
+            left: { type: "var", value: "b"},
+            right: { type: "num", value: 2}
+        },
+        // thirt line
+        {
+            type: "call",
+            func: { type: "var", value: "print" }
+            args: [
+                { type: "var", value: "a" },
+                { type: "var", value : "b" },
+                { type: "binary", operator: "plus", left: { type: "var", value: "a" }, right: { type: "var", value: "v" } }
+            ]
+        }
+    ]
+}
